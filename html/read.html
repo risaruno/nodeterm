@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Post Read</title>
+  </head>
+  <body>
+    <h1>Post Read Page</h1>
+    <a href="/">< Back to Dashboard</a>
+    <hr />
+    <fieldset>
+      <legend><%= data.username %></legend>
+      <table style="text-align: left">
+        <tr>
+          <th><%= data.content %></th>
+        </tr>
+        <tr>
+          <th>
+            <% if(data.image){ %>
+            <img
+              src="/upload/<%= data.image %>"
+              alt="<%= data.image %>"
+              width="100px"
+            />
+            <% } %>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <small><%= new Date(data.edited_at).toLocaleString(); %></small>
+          </th>
+        </tr>
+      </table>
+      <% if(data.id_user == session.id){ %>
+      <a href="../edit/<%= data.id %>">Edit</a> |
+      <a href="../delete/<%= data.id %>">Delete</a>
+      <% } %>
+    </fieldset>
+
+    <fieldset>
+      <legend>Comment</legend>
+      <% comment.forEach(function (item, index){%>
+      <fieldset>
+        <legend><%= item.username %></legend>
+        <div><%= item.comment %></div>
+        <small><%= new Date(item.created_at).toLocaleString(); %></small>
+      </fieldset>
+      <% }); %>
+    </fieldset>
+
+    <form method="post">
+      <fieldset>
+        <legend>Add Comment</legend>
+        <textarea
+          name="comment"
+          cols="45"
+          rows="5"
+          style="resize: none"
+          placeholder="Write comment"
+          required
+        ></textarea
+        ><br />
+        <input type="submit" value="Send" />
+      </fieldset>
+    </form>
+  </body>
+</html>

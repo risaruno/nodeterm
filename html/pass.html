@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Change Password</title>
+  </head>
+  <body>
+    <h1>Change Password Page</h1>
+    <a href="/profile/<%= session.id %>">< Back to Profile</a>
+    <hr />
+    <form action="#" method="post">
+      <fieldset>
+        <legend>Profile Edit</legend>
+        <table style="text-align: left">
+          <tr>
+            <th><label>Id</label></th>
+            <th>
+              <input type="text" name="id" value="<%= data.uid %>" disabled />
+            </th>
+          </tr>
+          <tr>
+            <th><label>Username</label></th>
+            <th>
+              <input
+                type="text"
+                name="username"
+                size="50"
+                value="<%= data.username %>"
+                disabled
+              />
+            </th>
+          </tr>
+          <tr>
+            <th><label>Old Password</label></th>
+            <th>
+              <input type="text" name="old_password" size="50" required />
+            </th>
+          </tr>
+          <tr>
+            <th><label>New Password</label></th>
+            <th>
+              <input
+                type="text"
+                id="pass1"
+                name="new_password"
+                size="50"
+                required
+              />
+            </th>
+          </tr>
+          <tr>
+            <th><label>New Password Confirmation</label></th>
+            <th>
+              <input
+                type="text"
+                id="pass2"
+                name="new_passwords"
+                size="50"
+                required
+              />
+            </th>
+          </tr>
+        </table>
+        <input type="submit" id="submit" value="Send" disabled />
+      </fieldset>
+    </form>
+    <footer>Copyright 리잘</footer>
+    <script>
+      var pass1 = document.getElementById("pass1");
+      var pass2 = document.getElementById("pass2");
+      var btn = document.getElementById("submit");
+      pass2.addEventListener("change", function () {
+        if (this.value != pass1.value) {
+          submit.disabled = true;
+        } else if (this.value == pass1.value) {
+          submit.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

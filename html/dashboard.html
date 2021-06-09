@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Post page</h1>
+    <h2>
+      <a href="profile/<%= session.id %>"> <%= session.username %></a>|
+      <small><a href="/logout">Logout</a></small>
+    </h2>
+    <hr />
+    <form action="#" enctype="multipart/form-data" method="post">
+      <fieldset>
+        <legend>Make a Post</legend>
+        <textarea
+          name="content"
+          rows="10"
+          cols="50"
+          placeholder="Post Something"
+          required
+        ></textarea
+        ><br />
+        <input
+          type="file"
+          name="image"
+          id="img"
+          accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+          onchange="upload(this)"
+        /><br />
+        <div id="viewer" style="width: 100px; height: 100px"></div>
+        <br />
+        <input type="submit" value="Post" />
+      </fieldset>
+    </form>
+    <h1>All Users Post</h1>
+    <% data.forEach(function (item, index){ %>
+    <fieldset>
+      <legend>
+        <a href="profile/<%= item.uid %>"><%= item.username %></a>
+        <% if(item.id_user == session.id){ %> |
+        <a href="edit/<%= item.id %>">Edit</a> |
+        <a href="delete/<%= item.id %>">Delete</a>
+        <% } %>
+      </legend>
+      <small><%= new Date(item.edited_at).toLocaleString(); %></small>
+      <div><%= item.content %></div>
+      <% if(item.image){ %>
+      <div>
+        <img width="100px" height="100px" src="/upload/<%= item.image %>" />
+      </div>
+      <% } %>
+      <a href="read/<%= item.id %>">Comment</a>
+    </fieldset>
+    <% }) %>
+    <footer>Copyright 리잘</footer>
+  </body>
+  <script>
+    load = () => {
+      console.log("Loaded");
+    };
+    upload = (input) => {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        var viewer = document.getElementById("viewer");
+        reader.onload = (e) => {
+          var img = document.createElement("img");
+          img.setAttribute("src", e.target.result);
+          img.setAttribute("style", "width:100px;height:100px;");
+          viewer.innerHTML = "";
+          viewer.appendChild(img);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    };
+    document.addEventListener("DOMContentLoaded", load);
+  </script>
+</html>

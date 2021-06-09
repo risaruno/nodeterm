@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Profile page</title>
+  </head>
+  <body>
+    <h1>Profile Page</h1>
+    <a href="/">< Back to Dashboard</a>
+    <hr />
+    <fieldset>
+      <legend>Profile</legend>
+      <h1><%= profile.username %></h1>
+      <% if(session.id == profile.uid){%>
+      <h5><a href="/pass">Change Password</a></h5>
+      <%}%>
+    </fieldset>
+    <h1><%= profile.username %>'s Post</h1>
+    <% data.forEach(function (item, index){%>
+    <fieldset>
+      <legend>
+        <a href="profile/<%= item.uid %>"><%= item.username %></a>
+        <% if(item.id_user == session.id){ %> |
+        <a href="../edit/<%= item.id %>">Edit</a> |
+        <a href="../delete/<%= item.id %>">Delete</a>
+        <% } %>
+      </legend>
+      <small><%= new Date(item.edited_at).toLocaleString(); %></small>
+      <div><%= item.content %></div>
+      <% if(item.image){ %>
+      <div>
+        <img width="100px" height="100px" src="/upload/<%= item.image %>" />
+      </div>
+      <%} %>
+      <a href="../read/<%= item.id %>">Comment</a>
+    </fieldset>
+    <%}) %>
+    <footer>Copyright 리잘</footer>
+  </body>
+</html>
